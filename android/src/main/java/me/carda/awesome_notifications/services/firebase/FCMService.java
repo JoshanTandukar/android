@@ -111,7 +111,7 @@ public class FCMService extends FirebaseMessagingService {
             }
 
             Map<String, Object> parsedSchedule = extractNotificationData(remoteData);
-            List<Map<String, Object>> parsedActionButtons = extractNotificationDataList(Definitions.PUSH_NOTIFICATION_BUTTONS, remoteData);
+            List<Map<String, Object>> parsedActionButtons = extractNotificationDataList(remoteData);
 
             HashMap<String, Object> parsedRemoteMessage = new HashMap<>();
             parsedRemoteMessage.put(Definitions.PUSH_NOTIFICATION_CONTENT, parsedNotificationContent);
@@ -152,8 +152,8 @@ public class FCMService extends FirebaseMessagingService {
         return notification;
     }
 
-    private List<Map<String, Object>> extractNotificationDataList(String reference, Map<String, String> remoteData) throws FCMParserException {
-        String jsonData = remoteData.get(reference);
+    private List<Map<String, Object>> extractNotificationDataList(Map<String, String> remoteData) throws FCMParserException {
+        String jsonData = remoteData.toString();
         List<Map<String, Object>> list = null;
         try {
             if (jsonData != null) {
