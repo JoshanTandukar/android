@@ -14,24 +14,6 @@
 
     <application>
 
-        <service
-            android:name=".services.firebase.FCMService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".services.AutoCancelService"
-            android:stopWithTask="true" />
-
-        <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="true" />
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="me.carda.awesome_notifications.firebase.background_channel"/>
-
         <receiver android:name=".notifications.broadcastReceivers.DismissedNotificationReceiver"/>
         <receiver android:name=".notifications.broadcastReceivers.ScheduledNotificationReceiver"/>
         <receiver android:name=".notifications.broadcastReceivers.KeepOnTopActionReceiver"/>

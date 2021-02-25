@@ -29,7 +29,7 @@ public interface Definitions {
     String BROADCAST_KEEP_ON_TOP ="broadcast.awesome_notifications.KEEP_ON_TOP";
     String EXTRA_BROADCAST_MESSAGE = "notification";
 
-    String PUSH_NOTIFICATION_CONTENT = "data";
+    String PUSH_NOTIFICATION_CONTENT = "content";
     String PUSH_NOTIFICATION_SCHEDULE = "schedule";
     String PUSH_NOTIFICATION_BUTTONS = "actionButtons";
 
