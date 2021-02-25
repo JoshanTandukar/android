@@ -104,13 +104,13 @@ public class FCMService extends FirebaseMessagingService {
             // FCM frame is discarded, only data is processed
             Map<String, String> remoteData = remoteMessage.getData();
 
-            Map<String, Object> parsedNotificationContent = extractNotificationData(Definitions.PUSH_NOTIFICATION_CONTENT, remoteData);
+            Map<String, Object> parsedNotificationContent = extractNotificationData(remoteData);
             if(MapUtils.isNullOrEmpty(parsedNotificationContent)){
                 Log.d(TAG, "Invalid notification content"+parsedNotificationContent);
                 return;
             }
 
-            Map<String, Object> parsedSchedule = extractNotificationData(Definitions.PUSH_NOTIFICATION_SCHEDULE, remoteData);
+            Map<String, Object> parsedSchedule = extractNotificationData(remoteData);
             List<Map<String, Object>> parsedActionButtons = extractNotificationDataList(Definitions.PUSH_NOTIFICATION_BUTTONS, remoteData);
 
             HashMap<String, Object> parsedRemoteMessage = new HashMap<>();
@@ -138,8 +138,8 @@ public class FCMService extends FirebaseMessagingService {
 
     }
 
-    private HashMap<String, Object> extractNotificationData(String reference, Map<String, String> remoteData) throws FCMParserException {
-        String jsonData = remoteData.get(reference);
+    private HashMap<String, Object> extractNotificationData(Map<String, String> remoteData) throws FCMParserException {
+        String jsonData = remoteData.toString();
         HashMap<String, Object> notification = null;
         try {
             if (jsonData != null) {
