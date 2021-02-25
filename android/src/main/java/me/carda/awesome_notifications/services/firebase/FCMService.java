@@ -106,7 +106,7 @@ public class FCMService extends FirebaseMessagingService {
 
             Map<String, Object> parsedNotificationContent = extractNotificationData(Definitions.PUSH_NOTIFICATION_CONTENT, remoteData);
             if(MapUtils.isNullOrEmpty(parsedNotificationContent)){
-                Log.d(TAG, "Invalid notification content");
+                Log.d(TAG, "Invalid notification content"+parsedNotificationContent);
                 return;
             }
 
