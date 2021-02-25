@@ -1,0 +1,158 @@
+{
+  "project_info": {
+    "project_number": "1052149797009",
+    "project_id": "twilio-voice-flutter-39",
+    "storage_bucket": "twilio-voice-flutter-39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052149797009:android:36282b573277e1e734ef30",
+        "android_client_info": {
+          "package_name": "com.flutter.twilio.voice_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052149797009-7n120fdqtlmu7j3g0sdk67v366csn2ii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutter.twilio.voice_example",
+            "certificate_hash": "0187822198455c3a12e9ac0c7e3c9f10183ff060"
+          }
+        },
+        {
+          "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrpvtyV8q16ruzDgz7pi6c0zLFsUi1QWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052149797009:android:072928e1880ef09034ef30",
+        "android_client_info": {
+          "package_name": "com.twilio.examplecustomaudiodevice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052149797009-trmmkekd03m2d9u4n4e4m9865rdejmcc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.twilio.examplecustomaudiodevice",
+            "certificate_hash": "0187822198455c3a12e9ac0c7e3c9f10183ff060"
+          }
+        },
+        {
+          "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrpvtyV8q16ruzDgz7pi6c0zLFsUi1QWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052149797009:android:6ae1ac27486d8f9034ef30",
+        "android_client_info": {
+          "package_name": "com.twilio.voice.quickstart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052149797009-9r8h9h2f36ppol8ef65bkpi82iqcpgrn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.twilio.voice.quickstart",
+            "certificate_hash": "0187822198455c3a12e9ac0c7e3c9f10183ff060"
+          }
+        },
+        {
+          "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrpvtyV8q16ruzDgz7pi6c0zLFsUi1QWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052149797009:android:464c1896240dc6ee34ef30",
+        "android_client_info": {
+          "package_name": "me.carda.awesome_notifications_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052149797009-oqv8ojsvmvcbq9o45kuk4oqckeok7t40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.carda.awesome_notifications_example",
+            "certificate_hash": "0187822198455c3a12e9ac0c7e3c9f10183ff060"
+          }
+        },
+        {
+          "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrpvtyV8q16ruzDgz7pi6c0zLFsUi1QWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052149797009-5e5jmevp8fa17d881mndbpj6mqumagrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
