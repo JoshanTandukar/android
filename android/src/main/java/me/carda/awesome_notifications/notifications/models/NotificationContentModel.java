@@ -32,7 +32,7 @@ public class NotificationContentModel extends Model {
     public String summary;
     public Boolean showWhen;
     public List<Object> actionButtons;
-    public Map<String, String> payload;
+    public Map<String, Object> payload;
     public Boolean playSound;
     public String customSound;
     public String icon;

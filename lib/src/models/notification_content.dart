@@ -37,7 +37,7 @@ class NotificationContent extends BaseNotificationContent {
       bool autoCancel,
       Color color,
       Color backgroundColor,
-      Map<String, String> payload,
+      Map<String, dynamic> payload,
       this.notificationLayout,
       this.hideLargeIconOnExpand,
       this.locked,

@@ -17,7 +17,7 @@ public class NotificationContentModel : AbstractModel {
     var showWhen: Bool?
     
     var actionButtons:[NotificationButtonModel]?
-    var payload:[String:String?]?
+    var payload:[String:var?]?
     
     var playSound: Bool?
     var customSound: String?
@@ -80,7 +80,7 @@ public class NotificationContentModel : AbstractModel {
         self.createdDate        = MapUtils<String>.getValueOrDefault(reference: "createdDate", arguments: arguments)
         self.displayedDate      = MapUtils<String>.getValueOrDefault(reference: "displayedDate", arguments: arguments)
         
-        self.payload  = MapUtils<[String:String?]>.getValueOrDefault(reference: "payload", arguments: arguments)
+        self.payload  = MapUtils<[String:var?]>.getValueOrDefault(reference: "payload", arguments: arguments)
         
         if(arguments?["actionButtons"] != nil){
             

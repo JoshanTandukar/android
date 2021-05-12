@@ -61,7 +61,7 @@ class FirebaseDataSource extends HttpDataSource {
     int notificationId,
     String title,
     String body,
-    Map<String, String> payload = const {}
+    Map<String, Object> payload = const {}
   }) async {
 
     return await _pushNotification(
