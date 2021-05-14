@@ -19,37 +19,37 @@ public class DisplayedManager {
         return shared.remove(referenceKey: String(id))
     }
     
-    public static func saveDisplayed(received:NotificationReceived) {
+     static func saveDisplayed(received:NotificationReceived) {
         let referenceKey = String(received.id!)
         let dataMap = received.toMap()
-        
+
         shared.set(dataMap, referenceKey:referenceKey)
     }
 
-    public static func listDisplayed() -> [NotificationReceived] {
+     static func listDisplayed() -> [NotificationReceived] {
         var returnedList:[NotificationReceived] = []
         let dataList = shared.getAllObjects()
-        
+
         for data in dataList {
             let received:NotificationReceived = NotificationReceived(nil).fromMap(arguments: data) as! NotificationReceived
             returnedList.append(received)
         }
-        
+
         return returnedList
     }
-    
-    public static func getDisplayedByKey(id:Int) -> NotificationReceived? {
+
+     static func getDisplayedByKey(id:Int) -> NotificationReceived? {
         guard let data:[String:Any?] = shared.get(referenceKey: String(id)) else {
           return nil
         }
         return NotificationReceived(nil).fromMap(arguments: data) as? NotificationReceived
     }
-    
+
     public static func updatePendingList(){
         pendingShared.set(pendingSchedulesDisplayed, referenceKey: Definitions.SHARED_SCHEDULED_DISPLAYED_REFERENCE)
     }
-    
-    public static func saveScheduledToDisplay(received:NotificationReceived) {
+
+     static func saveScheduledToDisplay(received:NotificationReceived) {
         let referenceKey = String(received.id!)
         let epoch:String = ( received.displayedDate?.toDate() ?? Date() ).secondsSince1970.description
         let dataMap = received.toMap()

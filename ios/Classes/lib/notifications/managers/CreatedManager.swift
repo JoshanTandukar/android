@@ -15,23 +15,23 @@ public class CreatedManager {
         return shared.remove(referenceKey: String(id));
     }
 
-    public static func listCreated() -> [NotificationReceived] {
+     static func listCreated() -> [NotificationReceived] {
         var returnedList:[NotificationReceived] = []
         let dataList = shared.getAllObjects()
-        
+
         for data in dataList {
             let received:NotificationReceived = NotificationReceived(nil).fromMap(arguments: data) as! NotificationReceived
             returnedList.append(received)
         }
-        
+
         return returnedList
     }
 
-    public static func saveCreated(received:NotificationReceived) {
+     static func saveCreated(received:NotificationReceived) {
         shared.set(received.toMap(), referenceKey: String(received.id!))
     }
 
-    public static func getCreatedByKey(id:Int) -> NotificationReceived? {
+     static func getCreatedByKey(id:Int) -> NotificationReceived? {
         guard let data:[String:Any?] = shared.get(referenceKey: String(id)) else {
           return nil
         }

@@ -411,21 +411,21 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         return notification
     }
     
-    public static func createEvent(notificationReceived:NotificationReceived){
+    static func createEvent(notificationReceived:NotificationReceived){
         //Log.d(SwiftAwesomeNotificationsPlugin.TAG, "NOTIFICATION CREATED")
-        
+
         let lifecycle = SwiftAwesomeNotificationsPlugin.appLifeCycle
-        
+
         if(SwiftUtils.isRunningOnExtension() || lifecycle == .AppKilled){
             CreatedManager.saveCreated(received: notificationReceived)
         } else {
             _ = CreatedManager.removeCreated(id: notificationReceived.id!)
-            
+
             SwiftAwesomeNotificationsPlugin.instance?.flutterChannel?.invokeMethod(Definitions.CHANNEL_METHOD_NOTIFICATION_CREATED, arguments: notificationReceived.toMap())
         }
     }
-    
-    public static func displayEvent(notificationReceived:NotificationReceived){
+
+     static func displayEvent(notificationReceived:NotificationReceived){
         //Log.d(SwiftAwesomeNotificationsPlugin.TAG, "NOTIFICATION DISPLAYED")
 
         let lifecycle = SwiftAwesomeNotificationsPlugin.appLifeCycle
