@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ActionReceived : NotificationReceived {
+class ActionReceived : NotificationReceived {
     
     var actionKey: String?
     var actionInput: String?

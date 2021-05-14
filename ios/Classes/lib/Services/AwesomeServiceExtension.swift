@@ -22,22 +22,23 @@ open class AwesomeServiceExtension: UNNotificationServiceExtension {
         self.content = (request.content.mutableCopy() as? UNMutableNotificationContent)
 
         if let content = content {
-            
+
             if(!StringUtils.isNullOrEmpty(content.userInfo["gcm.message_id"] as? String)){
                 print("FCM received")
-                
+
                 let title:String? = content.title
                 let body:String?  = content.body
                 var image:String?
-                
+
                 if let options = content.userInfo["fcm_options"] as? NSDictionary {
                     image = options["image"] as? String
                 }
-                
+
                 if content.userInfo[Definitions.PUSH_NOTIFICATION_CONTENT] == nil {
-                    
+
                     pushNotification = PushNotification()
-                    pushNotification!.content = NotificationContentModel()
+                    pushNotification!.content =
+                        NotificationContentModel()
                     
                     pushNotification!.content!.id = Int.random(in: 1..<2147483647)
                     pushNotification!.content!.channelKey = "basic_channel"

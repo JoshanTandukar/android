@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NotificationReceived : NotificationContentModel {
+ class NotificationReceived : NotificationContentModel {
     
     init(_ contentModel:NotificationContentModel?){
         super.init()
