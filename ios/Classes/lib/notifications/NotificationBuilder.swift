@@ -126,12 +126,17 @@ public class NotificationBuilder {
     }
     
     public static func jsonToPushNotification(jsonData:String?) -> PushNotification? {
-        if(StringUtils.isNullOrEmpty(jsonData)){ return nil }
-        
-        let data:[String:Any?]? = JsonUtils.fromJson(jsonData)
-        if(data == nil){ return nil }
-        
-        let pushNotification:PushNotification? = PushNotification().fromMap(arguments: data!) as? PushNotification
+        if(StringUtils.isNullOrEmpty(jsonData)){
+            print("json data is null or empty");
+            return nil }
+        guard let data = JsonUtils.fromJson(jsonData) else {
+            print("json util not found")
+            return nil
+        }
+//        let data:[String:Any?]? = JsonUtils.fromJson(jsonData)
+        print("this is jsonUtils",data )
+        let pushNotification:PushNotification? = PushNotification().fromMap(arguments: data) as? PushNotification
+        print("this is pushnotification",pushNotification)
         return pushNotification        
     }
     

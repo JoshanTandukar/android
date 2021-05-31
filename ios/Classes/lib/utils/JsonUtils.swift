@@ -23,12 +23,15 @@ public class JsonUtils {
         return jsonString
     }
     
-    public static func fromJson(_ text:String? ) -> [String:Any?]? {
-                
-        if StringUtils.isNullOrEmpty(text) { return nil }
+    public static func fromJson(_ text:String? ) -> [String:Any]? {
+        if StringUtils.isNullOrEmpty(text) {
+            print("this text is empty")
+            return nil }
             
         if let data = text!.data(using: String.Encoding.utf8) {
-            let decodedData:[String:Any?]? = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            print("this text encoding to utf8",data)
+            let decodedData:[String:Any]? = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any]
+            print("this is decoded Data", decodedData)
             return decodedData
         }
         

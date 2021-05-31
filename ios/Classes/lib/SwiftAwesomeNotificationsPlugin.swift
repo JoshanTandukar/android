@@ -40,7 +40,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
                 
                 mapData[Definitions.PUSH_NOTIFICATION_CONTENT] = JsonUtils.fromJson(contentJsonData)
                 
-                if let scheduleJsonData:String = userInfo[Definitions.PUSH_NOTIFICATION_SCHEDULE] as? String {
+                if let _:String = userInfo[Definitions.PUSH_NOTIFICATION_SCHEDULE] as? String {
                     mapData[Definitions.PUSH_NOTIFICATION_SCHEDULE] = JsonUtils.fromJson(contentJsonData)
                 }
                 
@@ -143,6 +143,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
     
     @available(iOS 10.0, *)
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//        print("this is notification::",notification.date);
         receiveNotification(content: notification.request.content, withCompletionHandler: completionHandler)
     }
     
@@ -264,16 +265,25 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
     
     @available(iOS 10.0, *)
     private func receiveNotification(content:UNNotificationContent, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
-        
-        let jsonData:String? = content.userInfo[Definitions.NOTIFICATION_JSON] as? String
-        let pushNotification:PushNotification? = NotificationBuilder.jsonToPushNotification(jsonData: jsonData)
-        
-        if(pushNotification == nil){
-            Log.d("receiveNotification","notification discarted")
-            completionHandler([])
+        guard let data = content.userInfo["body"] as? String else {
+            print("data not fount")
             return
         }
+        print("data",data)
         
+         let jsonData:String = data
+        print("jsonData",jsonData)
+            let pushNotification:PushNotification? = NotificationBuilder.jsonToPushNotification(jsonData: jsonData)
+            if(pushNotification == nil){
+                Log.d("receiveNotification","notification discarted")
+                Log.d("testing", "testing");
+                completionHandler([])
+                return
+            }
+        
+       
+     
+
         if(content.userInfo["updated"] == nil){
             
             pushNotification!.content!.displayedLifeCycle = SwiftAwesomeNotificationsPlugin.appLifeCycle
