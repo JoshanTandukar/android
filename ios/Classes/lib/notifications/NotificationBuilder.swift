@@ -133,7 +133,6 @@ public class NotificationBuilder {
             print("json util not found")
             return nil
         }
-//        let data:[String:Any?]? = JsonUtils.fromJson(jsonData)
         print("this is jsonUtils",data )
         let pushNotification:PushNotification? = PushNotification().fromMap(arguments: data) as? PushNotification
         print("this is pushnotification",pushNotification)

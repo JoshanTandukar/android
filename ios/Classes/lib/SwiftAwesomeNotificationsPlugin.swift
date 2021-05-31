@@ -101,6 +101,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         }
     }
 
+    
     // For Firebase Messaging versions older than 7.0
     // https://github.com/rafaelsetragni/awesome_notifications/issues/39
     public func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
@@ -108,12 +109,14 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         didReceiveRegistrationToken(messaging, fcmToken: fcmToken)
     }
     
+    
     public func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         
         if let unwrapped = fcmToken {
             didReceiveRegistrationToken(messaging, fcmToken: unwrapped)
         }
     }
+    
     
     private func didReceiveRegistrationToken(_ messaging: Messaging, fcmToken: String){
         
@@ -123,6 +126,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         
         flutterChannel?.invokeMethod(Definitions.CHANNEL_METHOD_NEW_FCM_TOKEN, arguments: fcmToken)
     }
+    
     
     @available(iOS 10.0, *)
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -147,12 +151,14 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         receiveNotification(content: notification.request.content, withCompletionHandler: completionHandler)
     }
     
+    
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable : Any] = [:]) -> Bool {
         enableFirebase(application)
         enableScheduler(application)
         
         return true
     }
+    
     
     var backgroundSessionCompletionHandler: (() -> Void)?
     var backgroundSynchTask: UIBackgroundTaskIdentifier = .invalid
@@ -164,6 +170,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         return true
     }
     
+    
     private func requestFirebaseToken() -> String? {
         if let token = SwiftAwesomeNotificationsPlugin.firebaseDeviceToken ?? Messaging.messaging().fcmToken {
             SwiftAwesomeNotificationsPlugin.firebaseDeviceToken = token
@@ -171,6 +178,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         }
         return nil
     }
+    
     
     private func enableScheduler(_ application: UIApplication){
         if !SwiftUtils.isRunningOnExtension() {
@@ -192,15 +200,18 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         }
     }
     
+    
     private func startBackgroundScheduler(){
         SwiftAwesomeNotificationsPlugin.rescheduleBackgroundTask()
     }
+    
     
     private func stopBackgroundScheduler(){
         if #available(iOS 13.0, *) {
             BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: Definitions.IOS_BACKGROUND_SCHEDULER)
         }
     }
+    
     
     public static func rescheduleBackgroundTask(){
         if #available(iOS 13.0, *) {
@@ -223,6 +234,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         }
     }
     
+    
     @available(iOS 13.0, *)
     private func handleAppSchedules(task: BGAppRefreshTask){
         
@@ -240,6 +252,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
             task.setTaskCompleted(success: !(lastOperation?.isCancelled ?? false))
         }
     }
+    
     
     @available(iOS 13.0, *)
     private func runScheduler(){
@@ -263,6 +276,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
         }
     }
     
+    
     @available(iOS 10.0, *)
     private func receiveNotification(content:UNNotificationContent, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
         guard let data = content.userInfo["body"] as? String else {
@@ -280,9 +294,7 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
                 completionHandler([])
                 return
             }
-        
-       
-     
+
 
         if(content.userInfo["updated"] == nil){
             
