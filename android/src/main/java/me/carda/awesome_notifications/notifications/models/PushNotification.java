@@ -8,15 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 import me.carda.awesome_notifications.Definitions;
-import me.carda.awesome_notifications.notifications.exceptions.PushNotificationException;
+import me.carda.awesome_notifications.notifications.exceptions.AwesomeNotificationException;
 
 public class PushNotification extends Model {
 
+    public boolean groupSummary = false;
     public NotificationContentModel content;
     public NotificationScheduleModel schedule;
     public List<NotificationButtonModel> actionButtons;
 
     public PushNotification(){}
+
+    public PushNotification ClonePush(){
+        PushNotification newPush = new PushNotification();
+        newPush.fromMap(this.toMap());
+        return newPush;
+    }
 
     @Override
     public PushNotification fromMap(Map<String, Object> parameters){
@@ -87,7 +94,12 @@ public class PushNotification extends Model {
         Map<String, Object> map = (Map<String, Object>) obj;
 
         if(map.isEmpty()) return null;
-        else return new NotificationScheduleModel().fromMap(map);
+
+        if(map.containsKey(Definitions.NOTIFICATION_SCHEDULE_INTERVAL)){
+            return new NotificationIntervalModel().fromMap(map);
+        }
+
+        return new NotificationCalendarModel().fromMap(map);
     }
 
     @SuppressWarnings("unchecked")
@@ -115,9 +127,9 @@ public class PushNotification extends Model {
         return actionButtons;
     }
 
-    public void validate(Context context) throws PushNotificationException {
+    public void validate(Context context) throws AwesomeNotificationException {
         if(this.content == null)
-            throw new PushNotificationException("Push Notification content cannot be null or empty");
+            throw new AwesomeNotificationException("Push Notification content cannot be null or empty");
 
         this.content.validate(context);
 

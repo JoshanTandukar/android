@@ -13,11 +13,9 @@ import me.carda.awesome_notifications.notifications.enumeratos.NotificationLayou
 import me.carda.awesome_notifications.notifications.enumeratos.NotificationLifeCycle;
 import me.carda.awesome_notifications.notifications.enumeratos.NotificationPrivacy;
 import me.carda.awesome_notifications.notifications.enumeratos.NotificationSource;
-import me.carda.awesome_notifications.notifications.exceptions.PushNotificationException;
+import me.carda.awesome_notifications.notifications.exceptions.AwesomeNotificationException;
 import me.carda.awesome_notifications.notifications.managers.ChannelManager;
-import me.carda.awesome_notifications.utils.AudioUtils;
 import me.carda.awesome_notifications.utils.BitmapUtils;
-import me.carda.awesome_notifications.utils.BooleanUtils;
 import me.carda.awesome_notifications.utils.DateUtils;
 import me.carda.awesome_notifications.utils.MapUtils;
 import me.carda.awesome_notifications.utils.StringUtils;
@@ -32,9 +30,8 @@ public class NotificationContentModel extends Model {
     public String summary;
     public Boolean showWhen;
     public List<Object> actionButtons;
-    public Map<String, Object> payload;
+    public Map<String, String> payload;
     public Boolean playSound;
-    public String customSound;
     public String icon;
     public String largeIcon;
     public Boolean locked;
@@ -88,7 +85,6 @@ public class NotificationContentModel extends Model {
         body  = getValueOrDefault(arguments, Definitions.NOTIFICATION_BODY, String.class);
         summary = getValueOrDefault(arguments, Definitions.NOTIFICATION_SUMMARY, String.class);
 
-        customSound = getValueOrDefault(arguments, Definitions.NOTIFICATION_CUSTOM_SOUND, String.class);
         playSound = getValueOrDefault(arguments, Definitions.NOTIFICATION_PLAY_SOUND, Boolean.class);
 
         showWhen = getValueOrDefault(arguments, Definitions.NOTIFICATION_SHOW_WHEN, Boolean.class);
@@ -137,7 +133,6 @@ public class NotificationContentModel extends Model {
 
         returnedObject.put(Definitions.NOTIFICATION_LOCKED, this.locked);
 
-        returnedObject.put(Definitions.NOTIFICATION_CUSTOM_SOUND, this.customSound);
         returnedObject.put(Definitions.NOTIFICATION_PLAY_SOUND, this.playSound);
 
         returnedObject.put(Definitions.NOTIFICATION_TICKER, this.ticker);
@@ -212,10 +207,10 @@ public class NotificationContentModel extends Model {
     }
 
     @Override
-    public void validate(Context context) throws PushNotificationException {
+    public void validate(Context context) throws AwesomeNotificationException {
 
         if(ChannelManager.getChannelByKey(context, channelKey) == null)
-            throw new PushNotificationException("Notification channel '"+channelKey+"' does not exists.");
+            throw new AwesomeNotificationException("Notification channel '"+channelKey+"' does not exists.");
 
         validateIcon(context);
 
@@ -239,42 +234,35 @@ public class NotificationContentModel extends Model {
         }
 
         validateLargeIcon(context);
-        validateSound(context);
 
     }
 
-    private void validateIcon(Context context) throws PushNotificationException {
+    private void validateIcon(Context context) throws AwesomeNotificationException {
 
         if(!StringUtils.isNullOrEmpty(icon)){
             if(
                 BitmapUtils.getMediaSourceType(icon) != MediaSource.Resource ||
                 !BitmapUtils.isValidBitmap(context, icon)
             ){
-                throw new PushNotificationException("Small icon ('"+icon+"') must be a valid media native resource type.");
+                throw new AwesomeNotificationException("Small icon ('"+icon+"') must be a valid media native resource type.");
             }
         }
     }
 
-    private void validateBigPicture(Context context) throws PushNotificationException {
+    private void validateBigPicture(Context context) throws AwesomeNotificationException {
         if(
             (StringUtils.isNullOrEmpty(largeIcon) && StringUtils.isNullOrEmpty(bigPicture)) ||
             (!StringUtils.isNullOrEmpty(largeIcon) && !BitmapUtils.isValidBitmap(context, largeIcon)) ||
             (!StringUtils.isNullOrEmpty(bigPicture) && !BitmapUtils.isValidBitmap(context, bigPicture))
         ){
-            throw new PushNotificationException("Invalid big picture '"+bigPicture+"' or large icon '"+largeIcon+"'");
+            throw new AwesomeNotificationException("Invalid big picture '"+bigPicture+"' or large icon '"+largeIcon+"'");
         }
     }
 
-    private void validateLargeIcon(Context context) throws PushNotificationException {
+    private void validateLargeIcon(Context context) throws AwesomeNotificationException {
         if(
                 (!StringUtils.isNullOrEmpty(largeIcon) && !BitmapUtils.isValidBitmap(context, largeIcon))
         )
-            throw new PushNotificationException("Invalid large icon '"+largeIcon+"'");
-    }
-
-    private void validateSound(Context context) throws PushNotificationException {
-        if(BooleanUtils.getValue(playSound) && !StringUtils.isNullOrEmpty(customSound) && !AudioUtils.isValidAudio(context, customSound)){
-            throw new PushNotificationException("Invalid audio source '"+customSound+"'");
-        }
+            throw new AwesomeNotificationException("Invalid large icon '"+largeIcon+"'");
     }
 }

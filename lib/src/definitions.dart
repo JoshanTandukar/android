@@ -1,5 +1,7 @@
 import 'package:awesome_notifications/src/enumerators/action_button_type.dart';
+import 'package:awesome_notifications/src/enumerators/default_ringtone_type.dart';
 import 'package:awesome_notifications/src/enumerators/group_alert_behaviour.dart';
+import 'package:awesome_notifications/src/enumerators/group_sort.dart';
 import 'package:awesome_notifications/src/enumerators/notification_importance.dart';
 import 'package:awesome_notifications/src/enumerators/notification_privacy.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +16,18 @@ const BROADCAST_MESSAGE =
     'me.carda.awesome_notifications.services.firebase.NOTIFICATION';
 const EXTRA_BROADCAST_MESSAGE = 'notification';
 
+const INITIALIZE_DEBUG_MODE = "debug";
 const INITIALIZE_DEFAULT_ICON = "defaultIcon";
 const INITIALIZE_CHANNELS = "initializeChannels";
 
-const PUSH_NOTIFICATION_CONTENT = "content";
-const PUSH_NOTIFICATION_SCHEDULE = "schedule";
-const PUSH_NOTIFICATION_BUTTONS = "actionButtons";
+const NOTIFICATION_CONTENT = "content";
+const NOTIFICATION_SCHEDULE = "schedule";
+const NOTIFICATION_BUTTONS = "actionButtons";
+
+const FOREGROUND_NOTIFICATION_DATA = "notificationData";
+const FOREGROUND_START_TYPE = "startType";
+const FOREGROUND_HAS_FOREGROUND = "hasForegroundServiceType";
+const FOREGROUND_SERVICE_TYPE = "foregroundServiceType";
 
 const APP_LIFECYCLE_FOREGROUND = 'FOREGROUND';
 const APP_LIFECYCLE_BACKGROUND = 'BACKGROUND';
@@ -60,10 +68,22 @@ const CHANNEL_METHOD_LIST_ALL_SCHEDULES = 'listAllSchedules';
 const CHANNEL_METHOD_GET_BADGE_COUNT = 'getBadgeCount';
 const CHANNEL_METHOD_SET_BADGE_COUNT = 'setBadgeCount';
 const CHANNEL_METHOD_RESET_BADGE = 'resetBadge';
+
+const CHANNEL_METHOD_DISMISS_NOTIFICATION = 'dismissNotification';
 const CHANNEL_METHOD_CANCEL_NOTIFICATION = 'cancelNotification';
 const CHANNEL_METHOD_CANCEL_SCHEDULE = 'cancelSchedule';
 const CHANNEL_METHOD_CANCEL_ALL_SCHEDULES = 'cancelAllSchedules';
+const CHANNEL_METHOD_DISMISS_ALL_NOTIFICATIONS = 'dismissAllNotifications';
 const CHANNEL_METHOD_CANCEL_ALL_NOTIFICATIONS = 'cancelAllNotifications';
+const CHANNEL_METHOD_GET_NEXT_DATE = 'getNextDate';
+const CHANNEL_FORCE_UPDATE = "forceUpdate";
+
+const CHANNEL_METHOD_GET_UTC_TIMEZONE_IDENTIFIER = 'getUtcTimeZoneIdentifier';
+const CHANNEL_METHOD_GET_LOCAL_TIMEZONE_IDENTIFIER =
+    'getLocalTimeZoneIdentifier';
+
+const CHANNEL_METHOD_START_FOREGROUND = 'startForeground';
+const CHANNEL_METHOD_STOP_FOREGROUND = 'stopForeground';
 
 const DRAWABLE_RESOURCE_REFERENCE = 'drawable';
 const DEFAULT_ICON = 'defaultIcon';
@@ -88,7 +108,7 @@ const INVALID_RAW_RESOURCE_ERROR_MESSAGE =
 const NOTIFICATION_SYSTEM_ID = 'id';
 const NOTIFICATION_ICON_RESOURCE_ID = 'iconResourceId';
 
-const NOTIFICATION_ID = 'notificationId';
+const NOTIFICATION_ID = 'id';
 const NOTIFICATION_LAYOUT = 'notificationLayout';
 
 const NOTIFICATION_CREATED_SOURCE = 'createdSource';
@@ -98,6 +118,22 @@ const NOTIFICATION_ACTION_LIFECYCLE = 'actionLifeCycle';
 const NOTIFICATION_CREATED_DATE = 'createdDate';
 const NOTIFICATION_DISPLAYED_DATE = 'displayedDate';
 const NOTIFICATION_ACTION_DATE = 'actionDate';
+
+const NOTIFICATION_SCHEDULE_TIMEZONE = 'timeZone';
+const NOTIFICATION_SCHEDULE_ERA = 'era';
+const NOTIFICATION_SCHEDULE_YEAR = 'year';
+const NOTIFICATION_SCHEDULE_MONTH = 'month';
+const NOTIFICATION_SCHEDULE_DAY = 'day';
+const NOTIFICATION_SCHEDULE_HOUR = 'hour';
+const NOTIFICATION_SCHEDULE_MINUTE = 'minute';
+const NOTIFICATION_SCHEDULE_SECOND = 'second';
+const NOTIFICATION_SCHEDULE_MILLISECOND = 'millisecond';
+const NOTIFICATION_SCHEDULE_WEEKDAY = 'weekday';
+const NOTIFICATION_SCHEDULE_WEEKOFMONTH = 'weekOfMonth';
+const NOTIFICATION_SCHEDULE_WEEKOFYEAR = 'weekOfYear';
+const NOTIFICATION_SCHEDULE_INTERVAL = 'interval';
+const NOTIFICATION_SCHEDULE_ALLOW_WHILE_IDLE = 'allowWhileIdle';
+const NOTIFICATION_SCHEDULE_REPEATS = 'repeats';
 
 const NOTIFICATION_TITLE = 'title';
 const NOTIFICATION_BODY = 'body';
@@ -115,12 +151,14 @@ const NOTIFICATION_BUTTON_TYPE = 'buttonType';
 const NOTIFICATION_ENABLED = "enabled";
 
 const NOTIFICATION_PAYLOAD = 'payload';
+const NOTIFICATION_INITIAL_FIXED_DATE = 'fixedDate';
 const NOTIFICATION_INITIAL_DATE_TIME = 'initialDateTime';
 const NOTIFICATION_CRONTAB_SCHEDULE = 'crontabSchedule';
 const NOTIFICATION_PRECISE_SCHEDULES = 'preciseSchedules';
 const NOTIFICATION_PLATFORM_CONFIGURATION = 'platformConfiguration';
 const NOTIFICATION_PRIVATE_MESSAGE = "privateMessage";
 const NOTIFICATION_DEFAULT_PRIVACY = "defaultPrivacy";
+const NOTIFICATION_DEFAULT_RINGTONE_TYPE = "defaultRingtoneType";
 const NOTIFICATION_PRIVACY = "privacy";
 const NOTIFICATION_AUTO_CANCEL = 'autoCancel';
 const NOTIFICATION_LOCKED = 'locked';
@@ -130,7 +168,7 @@ const NOTIFICATION_SOUND_PATH = 'sound';
 const NOTIFICATION_ENABLE_VIBRATION = 'enableVibration';
 const NOTIFICATION_VIBRATION_PATTERN = 'vibrationPattern';
 const NOTIFICATION_GROUP_KEY = 'groupKey';
-const NOTIFICATION_SET_AS_GROUP_SUMMARY = 'setAsGroupSummary';
+const NOTIFICATION_GROUP_SORT = 'groupSort';
 const NOTIFICATION_GROUP_ALERT_BEHAVIOR = 'groupAlertBehavior';
 const NOTIFICATION_ONLY_ALERT_ONCE = 'onlyAlertOnce';
 const NOTIFICATION_CHANNEL_KEY = 'channelKey';
@@ -168,14 +206,17 @@ const NOTIFICATION_TICKER = 'ticker';
 const NOTIFICATION_ALLOW_WHILE_IDLE = 'allowWhileIdle';
 
 class Definitions {
-  static Map<String, Object> initialValues = {
+  static Map<String, Object?> initialValues = {
     NOTIFICATION_ID: 0,
+    NOTIFICATION_SCHEDULE_REPEATS: false,
+    NOTIFICATION_GROUP_SORT: GroupSort.Desc,
     NOTIFICATION_GROUP_ALERT_BEHAVIOR: GroupAlertBehavior.All,
     NOTIFICATION_IMPORTANCE: NotificationImportance.Default,
     NOTIFICATION_LAYOUT: NotificationLayout.Default,
     NOTIFICATION_DEFAULT_PRIVACY: NotificationPrivacy.Private,
     NOTIFICATION_BUTTON_TYPE: ActionButtonType.Default,
     NOTIFICATION_PRIVACY: NotificationPrivacy.Private,
+    NOTIFICATION_DEFAULT_RINGTONE_TYPE: DefaultRingtoneType.Notification,
     NOTIFICATION_CHANNEL_KEY: "miscellaneous",
     NOTIFICATION_CHANNEL_DESCRIPTION: "Notifications",
     NOTIFICATION_CHANNEL_NAME: "Notifications",

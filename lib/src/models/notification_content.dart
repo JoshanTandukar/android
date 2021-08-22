@@ -8,36 +8,40 @@ import 'package:flutter/material.dart';
 /// Main content of notification
 /// If notification has no [body] or [title], it will only be created, but not displayed to the user (background notification).
 class NotificationContent extends BaseNotificationContent {
-  bool hideLargeIconOnExpand;
-  int progress;
-  String ticker;
+  bool? hideLargeIconOnExpand;
+  int? progress;
+  String? ticker;
 
-  NotificationLifeCycle displayedLifeCycle;
+  NotificationLifeCycle? displayedLifeCycle;
 
-  NotificationSource createdSource;
-  NotificationLifeCycle createdLifeCycle;
+  NotificationSource? createdSource;
+  NotificationLifeCycle? createdLifeCycle;
 
-  NotificationLayout notificationLayout;
+  NotificationLayout? notificationLayout;
 
-  String createdDate;
-  String displayedDate;
+  bool? displayOnForeground;
+  bool? displayOnBackground;
 
-  bool locked;
+  String? createdDate;
+  String? displayedDate;
 
-  NotificationContent({
-      int id,
-      String channelKey,
-      String title,
-      String body,
-      String summary,
-      bool showWhen,
-      String icon,
-      String largeIcon,
-      String bigPicture,
-      bool autoCancel,
-      Color color,
-      Color backgroundColor,
-      Map<String, dynamic> payload,
+  bool? locked;
+
+  NotificationContent(
+      {int? id,
+      String? channelKey,
+      String? title,
+      String? body,
+      String? summary,
+      bool? showWhen,
+      String? icon,
+      String? largeIcon,
+      String? bigPicture,
+      String? customSound,
+      bool? autoCancel,
+      Color? color,
+      Color? backgroundColor,
+      Map<String, String>? payload,
       this.notificationLayout,
       this.hideLargeIconOnExpand,
       this.locked,
@@ -47,6 +51,8 @@ class NotificationContent extends BaseNotificationContent {
       this.createdLifeCycle,
       this.displayedLifeCycle,
       this.createdDate,
+      this.displayOnForeground,
+      this.displayOnBackground,
       this.displayedDate})
       : super(
             id: id,
@@ -59,16 +65,18 @@ class NotificationContent extends BaseNotificationContent {
             icon: icon,
             largeIcon: largeIcon,
             bigPicture: bigPicture,
+            customSound: customSound,
             autoCancel: autoCancel,
             color: color,
             backgroundColor: backgroundColor);
 
   @override
-  fromMap(Map<String, dynamic> mapData) {
+  NotificationContent? fromMap(Map<String, dynamic> mapData) {
     super.fromMap(mapData);
 
     this.hideLargeIconOnExpand =
         AssertUtils.extractValue(mapData, 'hideLargeIconOnExpand');
+
     this.progress = AssertUtils.extractValue(mapData, 'progress');
     this.ticker = AssertUtils.extractValue(mapData, 'ticker');
     this.locked = AssertUtils.extractValue(mapData, 'locked');
@@ -85,8 +93,20 @@ class NotificationContent extends BaseNotificationContent {
         mapData, 'createdLifeCycle', NotificationLifeCycle.values);
 
     this.createdDate = AssertUtils.extractValue<String>(mapData, 'createdDate');
+
+    this.displayOnForeground =
+        AssertUtils.extractValue<bool>(mapData, 'displayOnForeground');
+    this.displayOnBackground =
+        AssertUtils.extractValue<bool>(mapData, 'displayOnBackground');
+
     this.displayedDate =
         AssertUtils.extractValue<String>(mapData, 'displayedDate');
+
+    try {
+      validate();
+    } catch (e) {
+      return null;
+    }
 
     return this;
   }
@@ -110,6 +130,8 @@ class NotificationContent extends BaseNotificationContent {
         'createdLifeCycle': AssertUtils.toSimpleEnumString(createdLifeCycle),
         'displayedLifeCycle':
             AssertUtils.toSimpleEnumString(displayedLifeCycle),
+        'displayOnForeground': displayOnForeground,
+        'displayOnBackground': displayOnBackground,
         'createdDate': createdDate,
         'displayedDate': displayedDate,
       });

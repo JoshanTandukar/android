@@ -3,15 +3,13 @@ package me.carda.awesome_notifications.notifications.broadcastReceivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
-import com.google.common.reflect.TypeToken;
+//import com.google.common.reflect.TypeToken;
 
 import me.carda.awesome_notifications.Definitions;
 import me.carda.awesome_notifications.notifications.models.PushNotification;
 import me.carda.awesome_notifications.notifications.NotificationScheduler;
 import me.carda.awesome_notifications.notifications.NotificationSender;
-import me.carda.awesome_notifications.utils.JsonUtils;
 import me.carda.awesome_notifications.utils.StringUtils;
 
 /**
@@ -29,37 +27,29 @@ public class ScheduledNotificationReceiver extends BroadcastReceiver {
         String notificationDetailsJson = intent.getStringExtra(Definitions.NOTIFICATION_JSON);
         if (!StringUtils.isNullOrEmpty(notificationDetailsJson)) {
 
-            PushNotification pushNotification = new PushNotification().fromJson(notificationDetailsJson);
-            if(pushNotification != null){
+            try {
+                PushNotification pushNotification = new PushNotification().fromJson(notificationDetailsJson);
 
-                try {
+                if(pushNotification == null){ return; }
 
-                    pushNotification.schedule.initialDateTime = null;
+                NotificationSender.send(
+                    context,
+                    pushNotification
+                );
 
-                    if(
-                        pushNotification.schedule.crontabSchedule != null ||
-                        pushNotification.schedule.preciseSchedules != null && !pushNotification.schedule.preciseSchedules.isEmpty()
-                    ){
-
-                        NotificationScheduler.schedule(
-                                context,
-                                pushNotification
-                        );
-
-                    } else {
-
-                        pushNotification.schedule = null;
-                        NotificationScheduler.cancelNotification(context, pushNotification.content.id);
-                    }
-
-                    NotificationSender.send(
-                            context,
-                            pushNotification
+                if(pushNotification.schedule.repeats)
+                    NotificationScheduler.schedule(
+                        context,
+                        pushNotification
+                    );
+                else
+                    NotificationScheduler.cancelSchedule(
+                        context,
+                        pushNotification.content.id
                     );
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

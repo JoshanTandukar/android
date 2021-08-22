@@ -16,11 +16,11 @@ import 'package:awesome_notifications/src/utils/string_utils.dart';
 /// [ActionButtonType.DisabledAction]: after user taps, the notification bar is closed, but the respective action event is not fired.
 /// [ActionButtonType.KeepOnTop]: after user taps, the notification bar is not closed, but an action event is fired.
 class NotificationActionButton extends Model {
-  String key;
-  String label;
-  String icon;
-  bool enabled;
-  bool autoCancel;
+  String? key;
+  String? label;
+  String? icon;
+  bool? enabled;
+  bool? autoCancel;
   ActionButtonType buttonType;
 
   NotificationActionButton(
@@ -32,18 +32,15 @@ class NotificationActionButton extends Model {
       this.buttonType = ActionButtonType.Default});
 
   @override
-  fromMap(Map<String, dynamic> dataMap) {
+  NotificationActionButton? fromMap(Map<String, dynamic> dataMap) {
     key = AssertUtils.extractValue(dataMap, 'key');
     icon = AssertUtils.extractValue(dataMap, 'icon');
     label = AssertUtils.extractValue(dataMap, 'label');
     enabled = AssertUtils.extractValue(dataMap, 'enabled');
     autoCancel = AssertUtils.extractValue(dataMap, 'autoCancel');
-    buttonType =
-        AssertUtils.extractEnum(dataMap, 'buttonType', ActionButtonType.values);
-
-    // For action buttons, it's only allowed resource media types
-    assert(StringUtils.isNullOrEmpty(icon) ||
-        BitmapUtils().getMediaSource(icon) == MediaSource.Resource);
+    buttonType = AssertUtils.extractEnum(
+            dataMap, 'buttonType', ActionButtonType.values) ??
+        ActionButtonType.Default;
 
     return this;
   }
@@ -65,5 +62,9 @@ class NotificationActionButton extends Model {
     assert(!AssertUtils.isNullOrEmptyOrInvalid(key, String));
     assert(!AssertUtils.isNullOrEmptyOrInvalid(label, String));
     assert(!AssertUtils.isNullOrEmptyOrInvalid(autoCancel, bool));
+
+    // For action buttons, it's only allowed resource media types
+    assert(StringUtils.isNullOrEmpty(icon) ||
+        BitmapUtils().getMediaSource(icon!) == MediaSource.Resource);
   }
 }

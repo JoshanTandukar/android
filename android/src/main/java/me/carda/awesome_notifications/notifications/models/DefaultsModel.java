@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.carda.awesome_notifications.Definitions;
-import me.carda.awesome_notifications.notifications.exceptions.PushNotificationException;
+import me.carda.awesome_notifications.notifications.exceptions.AwesomeNotificationException;
 
 public class DefaultsModel extends Model {
 
     public String appIcon;
+    public Boolean firebaseEnabled;
 
     public DefaultsModel(){}
 
@@ -21,6 +22,7 @@ public class DefaultsModel extends Model {
     @Override
     public Model fromMap(Map<String, Object> arguments) {
         appIcon  = getValueOrDefault(arguments, Definitions.NOTIFICATION_APP_ICON, String.class);
+        firebaseEnabled  = getValueOrDefault(arguments, Definitions.FIREBASE_ENABLED, Boolean.class);
 
         return this;
     }
@@ -30,6 +32,7 @@ public class DefaultsModel extends Model {
         Map<String, Object> returnedObject = new HashMap<>();
 
         returnedObject.put(Definitions.NOTIFICATION_APP_ICON, appIcon);
+        returnedObject.put(Definitions.FIREBASE_ENABLED, firebaseEnabled);
         return returnedObject;
     }
 
@@ -44,7 +47,7 @@ public class DefaultsModel extends Model {
     }
 
     @Override
-    public void validate(Context context) throws PushNotificationException {
+    public void validate(Context context) throws AwesomeNotificationException {
 
     }
 }

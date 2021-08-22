@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.carda.awesome_notifications.notifications.enumeratos.ActionButtonType;
+import me.carda.awesome_notifications.notifications.enumeratos.DefaultRingtoneType;
 import me.carda.awesome_notifications.notifications.enumeratos.GroupAlertBehaviour;
+import me.carda.awesome_notifications.notifications.enumeratos.GroupSort;
 import me.carda.awesome_notifications.notifications.enumeratos.NotificationImportance;
 import me.carda.awesome_notifications.notifications.enumeratos.NotificationLayout;
 import me.carda.awesome_notifications.notifications.enumeratos.NotificationPrivacy;
@@ -13,12 +15,14 @@ public interface Definitions {
 
     String BROADCAST_FCM_TOKEN = "me.carda.awesome_notifications.services.firebase.TOKEN";
     String EXTRA_BROADCAST_FCM_TOKEN = "token";
+    String EXTRA_ANDROID_MEDIA_BUTTON = "android.intent.action.MEDIA_BUTTON";
 
     String MEDIA_VALID_NETWORK = "^https?:\\/\\/";//(www)?(\\.?[a-zA-Z0-9@:%.\\-_\\+~#=]{2,256}\\/?)+(\\?\\S+)$
     String MEDIA_VALID_FILE = "^file?:\\/\\/";
     String MEDIA_VALID_ASSET = "^asset?:\\/\\/";
     String MEDIA_VALID_RESOURCE = "^resource?:\\/\\/";
 
+    String INITIALIZE_DEBUG_MODE = "debug";
     String INITIALIZE_CHANNELS = "initializeChannels";
     String INITIALIZE_DEFAULT_ICON = "defaultIcon";
     String INITIALIZE_REQUIRE_PERMISSION = "requirePermission";
@@ -26,6 +30,7 @@ public interface Definitions {
     String BROADCAST_CREATED_NOTIFICATION   = "broadcast.awesome_notifications.CREATED_NOTIFICATION";
     String BROADCAST_DISPLAYED_NOTIFICATION = "broadcast.awesome_notifications.DISPLAYED_NOTIFICATION";
     String BROADCAST_DISMISSED_NOTIFICATION = "broadcast.awesome_notifications.DISMISSED_NOTIFICATION";
+    String BROADCAST_MEDIA_BUTTON = "broadcast.awesome_notifications.MEDIA_BUTTON";
     String BROADCAST_KEEP_ON_TOP ="broadcast.awesome_notifications.KEEP_ON_TOP";
     String EXTRA_BROADCAST_MESSAGE = "notification";
 
@@ -47,6 +52,9 @@ public interface Definitions {
     String CHANNEL_METHOD_GET_DRAWABLE_DATA = "getDrawableData";
     String CHANNEL_METHOD_CREATE_NOTIFICATION = "createNewNotification";
 
+    String CHANNEL_METHOD_GET_UTC_TIMEZONE_IDENTIFIER = "getUtcTimeZoneIdentifier";
+    String CHANNEL_METHOD_GET_LOCAL_TIMEZONE_IDENTIFIER = "getLocalTimeZoneIdentifier";
+
     String CHANNEL_METHOD_GET_FCM_TOKEN = "getFirebaseToken";
     String CHANNEL_METHOD_NEW_FCM_TOKEN = "newTokenReceived";
     String CHANNEL_METHOD_IS_FCM_AVAILABLE = "isFirebaseAvailable";
@@ -58,9 +66,12 @@ public interface Definitions {
     String CHANNEL_METHOD_REQUEST_NOTIFICATIONS = "requestNotifications";
     String CHANNEL_METHOD_GET_BADGE_COUNT = "getBadgeCount";
     String CHANNEL_METHOD_SET_BADGE_COUNT = "setBadgeCount";
+    String CHANNEL_METHOD_GET_NEXT_DATE = "getNextDate";
     String CHANNEL_METHOD_RESET_BADGE = "resetBadge";
+    String CHANNEL_METHOD_DISMISS_NOTIFICATION = "dismissNotification";
     String CHANNEL_METHOD_CANCEL_NOTIFICATION = "cancelNotification";
     String CHANNEL_METHOD_CANCEL_SCHEDULE = "cancelSchedule";
+    String CHANNEL_METHOD_DISMISS_ALL_NOTIFICATIONS = "dismissAllNotifications";
     String CHANNEL_METHOD_CANCEL_ALL_SCHEDULES = "cancelAllSchedules";
     String CHANNEL_METHOD_CANCEL_ALL_NOTIFICATIONS = "cancelAllNotifications";
 
@@ -68,12 +79,18 @@ public interface Definitions {
     String CHANNEL_METHOD_NOTIFICATION_DISPLAYED = "notificationDisplayed";
     String CHANNEL_METHOD_NOTIFICATION_DISMISSED = "notificationDismissed";
     String CHANNEL_METHOD_RECEIVED_ACTION = "receivedAction";
+    String CHANNEL_METHOD_MEDIA_BUTTON = "mediaButton";
+
+    String CHANNEL_METHOD_START_FOREGROUND = "startForeground";
+    String CHANNEL_METHOD_STOP_FOREGROUND = "stopForeground";
 
     String CHANNEL_METHOD_LIST_ALL_SCHEDULES = "listAllSchedules";
+    String CHANNEL_FORCE_UPDATE = "forceUpdate";
 
-    String DEFAULT_ICON = "defaultIcon";
+    String FIREBASE_ENABLED = "FIREBASE_ENABLED";
     String SELECT_NOTIFICATION = "SELECT_NOTIFICATION";
     String DISMISSED_NOTIFICATION = "DISMISSED_NOTIFICATION";
+    String MEDIA_BUTTON = "MEDIA_BUTTON";
     String NOTIFICATION_BUTTON_ACTION_PREFIX = "ACTION_NOTIFICATION";
 
     String SHARED_PREFERENCES_CHANNEL_MANAGER = "channel_manager";
@@ -81,6 +98,22 @@ public interface Definitions {
     String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     String NOTIFICATION_ICON_RESOURCE_ID = "iconResourceId";
+
+    String NOTIFICATION_SCHEDULE_CREATED_DATE = "createdDate";
+    String NOTIFICATION_SCHEDULE_ERA = "era";
+    String NOTIFICATION_SCHEDULE_TIMEZONE = "timeZone";
+    String NOTIFICATION_SCHEDULE_YEAR = "year";
+    String NOTIFICATION_SCHEDULE_MONTH = "month";
+    String NOTIFICATION_SCHEDULE_DAY = "day";
+    String NOTIFICATION_SCHEDULE_HOUR = "hour";
+    String NOTIFICATION_SCHEDULE_MINUTE = "minute";
+    String NOTIFICATION_SCHEDULE_SECOND = "second";
+    String NOTIFICATION_SCHEDULE_MILLISECOND = "millisecond";
+    String NOTIFICATION_SCHEDULE_WEEKDAY = "weekday";
+    String NOTIFICATION_SCHEDULE_WEEKOFMONTH = "weekOfMonth";
+    String NOTIFICATION_SCHEDULE_WEEKOFYEAR = "weekOfYear";
+    String NOTIFICATION_SCHEDULE_INTERVAL = "interval";
+    String NOTIFICATION_SCHEDULE_REPEATS = "repeats";
 
     String NOTIFICATION_CREATED_SOURCE = "createdSource";
     String NOTIFICATION_CREATED_LIFECYCLE = "createdLifeCycle";
@@ -91,14 +124,14 @@ public interface Definitions {
     String NOTIFICATION_ACTION_DATE = "actionDate";
     String NOTIFICATION_DISPLAYED_DATE = "displayedDate";
     String NOTIFICATION_DISMISSED_DATE = "dismissedDate";
+    String NOTIFICATION_MEDIA_ACTION = "mediaAction";
 
     String NOTIFICATION_ID = "id";
     String NOTIFICATION_LAYOUT = "notificationLayout";
     String NOTIFICATION_TITLE = "title";
     String NOTIFICATION_BODY = "body";
     String NOTIFICATION_SUMMARY = "summary";
-    String NOTIFICATION_CUSTOM_SOUND = "customSound";
-    String NOTIFICATION_SHOW_WHEN = "showWen";
+    String NOTIFICATION_SHOW_WHEN = "showWhen";
     String NOTIFICATION_ACTION_KEY = "actionKey";
     String NOTIFICATION_ACTION_INPUT = "actionInput";
     String NOTIFICATION_JSON = "notificationJson";
@@ -110,6 +143,7 @@ public interface Definitions {
     String NOTIFICATION_BUTTON_TYPE = "buttonType";
 
     String NOTIFICATION_PAYLOAD = "payload";
+    String NOTIFICATION_INITIAL_FIXED_DATE = "fixedDate";
     String NOTIFICATION_INITIAL_DATE_TIME = "initialDateTime";
     String NOTIFICATION_CRONTAB_SCHEDULE = "crontabSchedule";
     String NOTIFICATION_PRECISE_SCHEDULES = "preciseSchedules";
@@ -124,10 +158,11 @@ public interface Definitions {
     String NOTIFICATION_ENABLE_VIBRATION = "enableVibration";
     String NOTIFICATION_VIBRATION_PATTERN = "vibrationPattern";
     String NOTIFICATION_GROUP_KEY = "groupKey";
-    String NOTIFICATION_SET_AS_GROUP_SUMMARY = "setAsGroupSummary";
-    String NOTIFICATION_GROUP_ALERT_BEHAVIOR = "groupAlertBehaviour";
+    String NOTIFICATION_GROUP_SORT = "groupSort";
+    String NOTIFICATION_GROUP_ALERT_BEHAVIOR = "groupAlertBehavior";
     String NOTIFICATION_PRIVACY = "privacy";
     String NOTIFICATION_DEFAULT_PRIVACY = "defaultPrivacy";
+    String NOTIFICATION_DEFAULT_RINGTONE_TYPE = "defaultRingtoneType";
     String NOTIFICATION_PRIVATE_MESSAGE = "privateMessage";
     String NOTIFICATION_ONLY_ALERT_ONCE = "onlyAlertOnce";
     String NOTIFICATION_CHANNEL_KEY = "channelKey";
@@ -151,12 +186,15 @@ public interface Definitions {
     String NOTIFICATION_ALLOW_WHILE_IDLE = "allowWhileIdle";
 
     Map<String, Object> initialValues = new HashMap<String, Object>(){{
+        put(Definitions.FIREBASE_ENABLED, true);
+        put(Definitions.NOTIFICATION_SCHEDULE_REPEATS, true);
         put(Definitions.NOTIFICATION_ID, 0);
         put(Definitions.NOTIFICATION_IMPORTANCE, NotificationImportance.Default);
         put(Definitions.NOTIFICATION_LAYOUT, NotificationLayout.Default);
+        put(Definitions.NOTIFICATION_GROUP_SORT, GroupSort.Desc);
         put(Definitions.NOTIFICATION_GROUP_ALERT_BEHAVIOR, GroupAlertBehaviour.All);
         put(Definitions.NOTIFICATION_DEFAULT_PRIVACY, NotificationPrivacy.Private);
-        put(Definitions.NOTIFICATION_PRIVACY, NotificationPrivacy.Private);
+        //put(Definitions.NOTIFICATION_PRIVACY, NotificationPrivacy.Private);
         put(Definitions.NOTIFICATION_CHANNEL_KEY, "miscellaneous");
         put(Definitions.NOTIFICATION_CHANNEL_DESCRIPTION, "Notifications");
         put(Definitions.NOTIFICATION_CHANNEL_NAME, "Notifications");
@@ -176,6 +214,7 @@ public interface Definitions {
         put(Definitions.NOTIFICATION_LED_ON_MS, 300);
         put(Definitions.NOTIFICATION_PLAY_SOUND, true);
         put(Definitions.NOTIFICATION_AUTO_CANCEL, true);
+        put(Definitions.NOTIFICATION_DEFAULT_RINGTONE_TYPE, DefaultRingtoneType.Notification);
         //put(Definitions.NOTIFICATION_LOCKED, false);
         put(Definitions.NOTIFICATION_TICKER, "ticker");
         put(Definitions.NOTIFICATION_ALLOW_WHILE_IDLE, false);

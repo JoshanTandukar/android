@@ -4,12 +4,12 @@ import 'package:awesome_notifications/src/utils/assert_utils.dart';
 
 /// All received details of a user action over a Notification
 class ReceivedAction extends ReceivedNotification {
-  NotificationLifeCycle actionLifeCycle;
-  NotificationLifeCycle dismissedLifeCycle;
+  NotificationLifeCycle? actionLifeCycle;
+  NotificationLifeCycle? dismissedLifeCycle;
   String buttonKeyPressed = '';
   String buttonKeyInput = '';
-  String actionDate;
-  String dismissedDate;
+  String? actionDate;
+  String? dismissedDate;
 
   ReceivedAction();
 
@@ -26,8 +26,10 @@ class ReceivedAction extends ReceivedNotification {
     actionDate = AssertUtils.extractValue<String>(dataMap, 'actionDate');
     dismissedDate = AssertUtils.extractValue<String>(dataMap, 'dismissedDate');
 
-    buttonKeyPressed = AssertUtils.extractValue<String>(dataMap, 'actionKey');
-    buttonKeyInput = AssertUtils.extractValue<String>(dataMap, 'actionInput');
+    buttonKeyPressed =
+        AssertUtils.extractValue<String>(dataMap, 'actionKey') ?? '';
+    buttonKeyInput =
+        AssertUtils.extractValue<String>(dataMap, 'actionInput') ?? '';
 
     return this;
   }
